@@ -1,0 +1,250 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local animator = humanoid:FindFirstChildOfClass("Animator") or Instance.new("Animator", humanoid)
+local replicatedStorage = game:GetService("ReplicatedStorage")
+
+local remoteEvent = replicatedStorage:FindFirstChild("PlayAnimation") or Instance.new("RemoteEvent")
+remoteEvent.Name = "PlayAnimation"
+remoteEvent.Parent = replicatedStorage
+
+-- Animation setup
+local animationH = Instance.new("Animation")
+animationH.AnimationId = "rbxassetid://16371217304"
+local trackH = animator:LoadAnimation(animationH)
+
+local animationY = Instance.new("Animation")
+animationY.AnimationId = "rbxassetid://10714390497"
+local trackY = animator:LoadAnimation(animationY)
+
+-- New animations
+local animationA = Instance.new("Animation")
+animationA.AnimationId = "rbxassetid://10121528997"
+local trackA = animator:LoadAnimation(animationA)
+
+local animationB = Instance.new("Animation")
+animationB.AnimationId = "rbxassetid://18665811005"
+local trackB = animator:LoadAnimation(animationB)
+
+-- Backflip animations
+local animationC = Instance.new("Animation")
+animationC.AnimationId = "rbxassetid://15693621070"
+local trackC = animator:LoadAnimation(animationC)
+
+local animationD = Instance.new("Animation")
+animationD.AnimationId = "rbxassetid://18526288497"
+local trackD = animator:LoadAnimation(animationD)
+
+-- Backflip/Split animation
+local animationE = Instance.new("Animation")
+animationE.AnimationId = "rbxassetid://15693621070"
+local trackE = animator:LoadAnimation(animationE)
+
+local animationF = Instance.new("Animation")
+animationF.AnimationId = "rbxassetid://10714390497"
+local trackF = animator:LoadAnimation(animationF)
+
+-- Additional animation for backflip/break
+local animationG = Instance.new("Animation")
+animationG.AnimationId = "rbxassetid://10121221116"  -- Replace with the actual ID
+local trackG = animator:LoadAnimation(animationG)
+
+-- Fourth animation for backflip/split
+local animationH2 = Instance.new("Animation")
+animationH2.AnimationId = "rbxassetid://5915648917"  -- Fourth animation
+local trackH2 = animator:LoadAnimation(animationH2)
+
+-- New animation for Headless Combo
+local animationI = Instance.new("Animation")
+animationI.AnimationId = "rbxassetid://11309304959"  -- Headless combo animation
+local trackI = animator:LoadAnimation(animationI)
+
+-- New animation for breakdown
+local animationJ = Instance.new("Animation")
+animationJ.AnimationId = "rbxassetid://10121566063"  -- breakdown animation
+local trackJ = animator:LoadAnimation(animationJ)
+
+-- New animation for breakdown
+local animationK = Instance.new("Animation")
+animationK.AnimationId = "rbxassetid://10121533723"  -- breakdown animation
+local trackK = animator:LoadAnimation(animationK)
+
+-- New animation for calam
+local animationL = Instance.new("Animation")
+animationL.AnimationId = "rbxassetid://10121528997"  -- calam animation
+local trackL = animator:LoadAnimation(animationL)
+
+-- New animation for beggin
+local animationM = Instance.new("Animation")
+animationL.AnimationId = "rbxassetid://10121522325"  -- beggin animation
+local trackM = animator:LoadAnimation(animationL)
+
+-- New animation for beggin
+local animationN = Instance.new("Animation")
+animationL.AnimationId = "rbxassetid://10147821284"  -- beggin animation
+local trackN = animator:LoadAnimation(animationL)
+
+-- New animation for beggin
+local animationO = Instance.new("Animation")
+animationL.AnimationId = "rbxassetid://18537367238"  -- beggin animation
+local trackO = animator:LoadAnimation(animationL)
+
+-- Function to trigger the animations at double speed
+local function playAnimation(animationTrack, startTime, speed)
+    for _, track in pairs(animator:GetPlayingAnimationTracks()) do
+        track:Stop()
+    end
+
+    animationTrack:Play()
+    animationTrack:AdjustSpeed(speed or 2)  -- Set speed, default is 2x
+
+    if startTime then
+        animationTrack.TimePosition = startTime
+    end
+
+    remoteEvent:FireServer(animationTrack.Animation.AnimationId)
+
+    return animationTrack  -- Return the animation track for further control
+end
+
+-- Create UI Buttons
+local screenGui = Instance.new("ScreenGui", player.PlayerGui)
+
+-- First Button
+local button1 = Instance.new("TextButton", screenGui)
+button1.Size = UDim2.new(0, 100, 0, 50)
+button1.Position = UDim2.new(1, -110, 0, 10)
+button1.Text = "kungfu/split"
+button1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button1.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Button click event for the first button
+button1.MouseButton1Click:Connect(function()
+    playAnimation(trackH)
+    wait(1.5)
+    playAnimation(trackY, 0.4)
+end)
+
+-- Second Button
+local button2 = Instance.new("TextButton", screenGui)
+button2.Size = UDim2.new(0, 100, 0, 50)
+button2.Position = UDim2.new(1, -110, 0, 70)
+button2.Text = "calamity/tts"
+button2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button2.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Button click event for the second button
+button2.MouseButton1Click:Connect(function()
+    playAnimation(trackA, 0)
+    wait(0.3)
+    playAnimation(trackB, 6.1)
+end)
+
+-- Third Button: Backflip/Break
+local button3 = Instance.new("TextButton", screenGui)
+button3.Size = UDim2.new(0, 100, 0, 50)
+button3.Position = UDim2.new(1, -110, 0, 130)
+button3.Text = "backflip/break"
+button3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button3.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Button click event for the third button
+button3.MouseButton1Click:Connect(function()
+    playAnimation(trackC, 0.4)
+    wait(0.5)
+    playAnimation(trackD, 2)
+    wait(0.5)
+    playAnimation(trackG, 1)
+    wait(2)
+    playAnimation(trackH2, 1)
+end)
+
+-- Fourth Button: Backflip/Split
+local button4 = Instance.new("TextButton", screenGui)
+button4.Size = UDim2.new(0, 100, 0, 50)
+button4.Position = UDim2.new(1, -110, 0, 190)
+button4.Text = "backflip/split"
+button4.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button4.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Button click event for the fourth button
+button4.MouseButton1Click:Connect(function()
+    playAnimation(trackE, 0.4)
+    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    wait(0.62)
+    playAnimation(trackF, 0.4)
+    wait(1.1)
+    playAnimation(trackG, 1)
+    wait(2)
+    playAnimation(trackH2, 1)
+end)
+
+-- Fifth Button: Headless Combo
+local button5 = Instance.new("TextButton", screenGui)
+button5.Size = UDim2.new(0, 100, 0, 50)
+button5.Position = UDim2.new(1, -110, 0, 250)  -- Position below the fourth button
+button5.Text = "Headless Combo"
+button5.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button5.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Button click event for the Headless Combo button
+button5.MouseButton1Click:Connect(function()
+    playAnimation(trackI, 18)  -- Play the new animation starting at 18 seconds
+    wait(2)  -- Wait for 2 seconds while the animation plays
+    
+    -- Automatically send "/headless" to the chat
+    local chatEvent = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
+    chatEvent:Fire("/headless", "All")  -- Send chat message
+end)
+
+-- Sixth Button: 1 Min Blick
+local button6 = Instance.new("TextButton", screenGui)
+button6.Size = UDim2.new(0, 100, 0, 50)
+button6.Position = UDim2.new(1, -110, 0, 310)  -- Position below the fifth button
+button6.Text = "1 Min Blick"
+button6.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+button6.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Button click event for the 1 Min Blick button
+button6.MouseButton1Click:Connect(function()
+    playAnimation(trackK, 0)  -- Play the breakdown animation
+    wait(3.9)
+    playAnimation(trackJ, 0)
+    wait(2)
+    playAnimation(trackA, 0)
+    wait(0.05)
+    
+    -- Play the last animation (trackL) and set speed to 0
+    local lastTrack = playAnimation(trackL, 0.3, 0.2)  -- Start the last animation at 0 speed
+    wait(0)  -- Brief wait to ensure it starts
+    wait(2)
+    playAnimation(trackK, 0)
+    wait(3.9)
+    playAnimation(trackM, 0)
+    wait(2.3)
+    
+    -- Play the last animation (trackL) and set speed to 0
+    local lastTrack = playAnimation(trackE, 0.4, 1.5)  -- Start the last animation at 0 speed
+    wait(0.5)  -- Brief wait to ensure it starts
+
+    -- Play the last animation (trackL) and set speed to 0
+    local lastTrack = playAnimation(trackN, 1, 1)  -- Start the last animation at 0 speed
+    wait(1)  -- Brief wait to ensure it starts
+
+     -- Play the last animation (trackN) and set speed to 0
+    local lastTrack = playAnimation(trackN, 2, -2)  -- Start the last animation at 0 speed
+    wait(0.5)  -- Brief wait to ensure it starts
+    
+       -- Play the last animation (trackO) and set speed to 0
+    local lastTrack = playAnimation(trackO, 0, 0.3)  -- Start the last animation at 0 speed
+    wait(0.7)  -- Brief wait to ensure it starts
+
+     -- Play the last animation (trackO) and set speed to 0
+    local lastTrack = playAnimation(trackH2, 2, 1)  -- Start the last animation at 0 speed
+    wait(0)  -- Brief wait to ensure it starts
+    wait(0.7)
+    playAnimation(trackJ, 0)
+    
+end)
+
+-- Continue with the rest of your script...
